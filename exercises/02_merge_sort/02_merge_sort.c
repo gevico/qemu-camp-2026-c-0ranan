@@ -14,8 +14,53 @@ Student students[MAX_STUDENTS];
 Student temp[MAX_STUDENTS];
 
 void merge_sort(int left, int right) {
-    // TODO: 在这里添加你的代码
-    // I AM NOT DONE
+    // 如果左侧比右侧更右，或者相等，那么没有意义
+    if (left >= right) {
+        return;
+    }
+
+    // 计算中间位置
+    int mid = (left + right) / 2;
+
+    // 递归排序左侧半部分
+    merge_sort(left, mid);
+
+    // 递归排序右侧半部分
+    merge_sort(mid + 1, right);
+
+
+    int i = left; // 左侧半部分指针
+    int i_end = mid; // 左侧半部分结束位置
+    int j = mid + 1; // 右侧半部分指针
+    int j_end = right; // 右侧半部分结束位置
+    int k = left; // 临时数组指针
+
+    // 按照循序合并左侧半部分和右侧半部分
+    for(;i<=i_end && j<=j_end;k++){
+        if(students[i].score > students[j].score){
+            temp[k] = students[i];
+            i++;
+        }else{
+            temp[k] = students[j];
+            j++;
+        }
+    }
+
+    // 合并剩余元素到临时数组中
+    for(;i<=i_end;k++){
+        temp[k] = students[i];
+        i++;
+    }
+    for(;j<=j_end;k++){
+        temp[k] = students[j];
+        j++;
+    }
+
+    // 复制临时数组中的元素到原始数组中
+    for(i = left; i <= right; i++){
+        students[i] = temp[i];
+    }
+
 }
 
 int main(void) {
