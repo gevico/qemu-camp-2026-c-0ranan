@@ -14,9 +14,24 @@ typedef struct {
 Student students[MAX_STUDENTS];
 int n;
 
+
+// 折半查找函数
+int binary_search_helper(Student students[], int left, int right, const char *target_name) {
+    int mid = (left + right) / 2;
+    int cmp = strcmp(students[mid].name, target_name) ;
+    if (cmp == 0) {
+        return mid;
+    } else if (cmp < 0) {
+        return binary_search_helper(students, mid + 1, right, target_name);
+    } else {
+        return binary_search_helper(students, left, mid - 1, target_name);
+    }
+    return -1;
+}
+
+
 int binary_search(const char *target_name) {
-    // TODO: 在这里添加你的代码
-    // I AM NOT DONE
+    return binary_search_helper(students, 0, n - 1, target_name);
 }
 
 int main(void) {
