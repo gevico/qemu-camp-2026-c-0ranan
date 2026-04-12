@@ -56,7 +56,7 @@ echo "---------------"
 if [ "$EXERCISE_NAME" = "20_mybash" ]; then
     (cd "$EXERCISE_DIR" && ./20_mybash)
 else
-    (cd "$EXERCISE_DIR" && "./${EXERCISE_NAME}")
+    "$EXECUTABLE"
 fi
 
 echo ""
