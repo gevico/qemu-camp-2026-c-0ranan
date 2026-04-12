@@ -9,13 +9,61 @@ typedef struct {
     char name[NAME_LEN];
     int score;
 } Student;
-
+int n;
 Student students[MAX_STUDENTS];
 
-void quick_sort(int left, int right) {
-    // TODO: 在这里添加你的代码
-    // I AM NOT DONE
+
+int print_students(Student students[], int n) {
+    for (int i = 0; i < n; i++) {
+        printf("%s %d,", students[i].name, students[i].score);
+    }
+    printf("\n");
 }
+
+
+void quick_sort(int left, int right) {
+
+    // 如果左侧比右侧更右，或者相等，那么没有意义
+    if(left >= right){
+        return;
+    }
+
+
+    
+    int x = students[(left+right)/2].score;
+    int l = left-1;
+    int r = right+1;
+    // printf("-----------------\n");
+    // printf("left=%d,right=%d\n",left,right);
+    // printf("x=%d,l=%d,r=%d\n",x,l,r);
+
+    while(l<r){
+
+        // 找到第一个大于x的元素
+        do l++;while(students[l].score>x);
+        // 找到第一个小于x的元素
+        do r--;while(students[r].score<x);
+        
+
+        
+        // 交换元素
+        if(l<r){
+            // printf("swap l=%d,r=%d\n",l,r);
+            
+            Student temp = students[l];
+            students[l] = students[r];
+            students[r] = temp;
+            // print_students(students, n);
+            // l++;
+            // r--;
+        }
+    }
+
+    // 递归排序
+    quick_sort(left,l);
+    quick_sort(l+1,right);
+}
+
 
 int main(void) {
     FILE *file = fopen("03_students.txt", "r");
@@ -24,7 +72,7 @@ int main(void) {
         return 1;
     }
 
-    int n;
+
     fscanf(file, "%d", &n);
 
     if (n <= 0 || n > MAX_STUDENTS) {

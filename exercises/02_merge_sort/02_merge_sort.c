@@ -49,11 +49,9 @@ void merge_sort(int left, int right) {
     // 合并剩余元素到临时数组中
     for(;i<=i_end;k++){
         temp[k] = students[i];
-        i++;
     }
     for(;j<=j_end;k++){
         temp[k] = students[j];
-        j++;
     }
 
     // 复制临时数组中的元素到原始数组中
