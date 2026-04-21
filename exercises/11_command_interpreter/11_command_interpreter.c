@@ -52,17 +52,37 @@ int main(void)
     return 0;
 }
 
-// shell_parse 和 execute_command 保持不变
 int shell_parse(char *buf, char *argv[])
 {
-    int argc = 0;
-    int state = 0;
-    // TODO: 在这里添加你的代码，完成命令行解析
-    // 功能：将输入字符串buf按空格分割成多个参数，存入argv数组
-    // 返回：参数个数argc
-    // 提示：使用状态机的方式处理，注意处理字符串结束符
-    // I AM NOT DONE
-    return argc;
+	/* 状态: 0 在词外, 1 在词内。与 main 中一致, 空格/制表符为分隔。最多 MAX_ARGS 个参数。 */
+	int argc = 0;
+	int state = 0;
+	int recorded = 0;//用来判断是否月结
+	int len = (int)strlen(buf);
+
+	for (int i = 0; i <= len; i++) {
+		int c = (unsigned char)buf[i];
+		int in_word = (c != ' ' && c != '\t' && c != '\0');
+		if (!in_word) {
+			buf[i] = '\0';
+		}
+		/* 0 -> 1: 新词开始 */
+		if (state == 0 && in_word) {
+			recorded = (argc < MAX_ARGS);
+			if (recorded) {
+				argv[argc] = buf + i;
+			}
+		}
+		/* 1 -> 0: 词结束, 且该词有记入 argv 时才使 argc+1 */
+		if (state == 1 && !in_word) {
+			if (recorded) {
+				argc++;
+			}
+		}
+		state = in_word;
+	}
+	argv[argc] = NULL;
+	return argc;
 }
 
 void execute_command(int argc, char *argv[])
