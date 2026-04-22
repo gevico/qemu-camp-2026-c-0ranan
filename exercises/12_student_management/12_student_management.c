@@ -20,7 +20,15 @@ int main() {
     for (int i = 0; i < 3; i++) 
     {
 	    // TODO: 在这里添加你的代码
-        // I AM NOT DONE
+		students[i] = malloc(sizeof(Student));
+		int ret = fscanf(file, "%s %s %d", students[i]->id, students[i]->name, &students[i]->age);
+
+		if(ret!=3){
+			printf("读取第%d行失败\n", i+1);
+			continue;
+		}
+
+
     }
     fclose(file);
     
