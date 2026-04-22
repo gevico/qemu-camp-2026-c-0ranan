@@ -27,7 +27,8 @@ void processFile(const char *filename) {
         printf("错误: 无法打开文件 %s\n", filename);
         return;
     }
-
+    // choice: 1-整数排序, 2-浮点数排序
+    // n: 元素数量, 最多支持20个元素
     int choice, n;
     if (fscanf(fin, "%d", &choice) != 1 || fscanf(fin, "%d", &n) != 1) {
         printf("错误: 文件 %s 格式不正确\n", filename);
@@ -41,7 +42,51 @@ void processFile(const char *filename) {
 
     switch (choice) {
         // TODO: 在这里添加你的代码
-        // I AM NOT DONE
+        
+        case 1 :
+            // 整数排序
+            
+
+            int *is = malloc(sizeof(int)*n);
+
+            // 读取数据
+            for(int i=0;i<n;i++){
+                fscanf(fin,"%d",&is[i]);
+            }
+            // 排序
+            sort(is,n,sizeof(int),compareInt);
+            // 输出结果
+            for(int i=0;i<n;i++){
+                if(i!=0){
+                    printf(" ");
+                }
+                printf("%d",is[i]);
+            }
+            printf("\n");
+            // 释放内存
+            free(is);
+            break ; 
+        case 2 :
+            // 浮点数排序
+            float *fs = malloc(sizeof(float)*n);
+
+            // 读取数据
+            for(int i=0;i<n;i++){
+                fscanf(fin,"%f",&fs[i]);
+            }
+            // 排序
+            sort(fs,n,sizeof(float),compareFloat);
+            // 输出结果
+            for(int i=0;i<n;i++){
+                if(i!=0){
+                    printf(" ");
+                }
+                printf("%.2f",fs[i]);
+            }
+            printf("\n");
+            // 释放内存
+            free(fs);
+            break ; 
     }
 
     fclose(fin);
